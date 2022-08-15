@@ -1045,6 +1045,47 @@ Node *reverseRecursive(Node* &head){
     return newNode;
     
 }
+int findMid(Node* &head){
+    Node  *fast = head;
+    Node *slow = head;
+    if(head==NULL){
+        return -1;
+    }
+    while (fast != NULL && fast->Next != NULL)
+    {
+        slow = slow->Next;
+        fast = fast->Next->Next;
+    }
+    return slow->value;
+    
+}
+void makeCycle(Node* &head , int position){
+    Node* tamp = head;
+    Node* standNode;
+    int count = 1;
+    while (tamp->Next !=NULL)
+    {
+        if(count==position) standNode=tamp;
+        tamp=tamp->Next;
+        count++;
+    }
+    tamp->Next = standNode;
+}
+bool detectCycle(Node* &head){
+    Node *slow = head;
+    Node *fast = head;
+    while (fast !=NULL && fast->Next !=NULL)
+    {
+        slow = slow->Next;
+        fast = fast->Next->Next;
+        if(slow->Next==fast->Next){
+            return true;
+        }
+    }
+    
+    return false;
+
+}
 int main()
 {
     Node *head = NULL;
@@ -1062,6 +1103,9 @@ int main()
          << "deletion at the specificPosition value : 9" << endl
          << "deletion at the unique number  value : 10" << endl
          << "reverse the link list None recursive away : 11" << endl
+         << "find link list mid point  : 12" << endl
+         << "make cycle in the link list  : 13" << endl
+         << "make dectectcycle in the link list  : 14" << endl
          << "exit the code: 0"
          << endl
          << endl;
@@ -1166,6 +1210,30 @@ int main()
         case 11:
         head = reverseRecursive(head);
         break;
+        case 12:
+        int mid;
+        mid = findMid(head);
+        if(mid == -1){
+            cout<<"link list is empty"<<endl;
+        }
+        else cout<<"link list mid :"<<mid<<endl;
+        
+        break;
+        case 13:
+        cout<<"enter the desert position detectcycle : ";
+        cin>> pos;
+        makeCycle(head,pos);
+        break;
+        case 14:
+        bool standCycle;
+        standCycle = detectCycle(head);
+        if(standCycle==true){
+            cout<<"there is cycle link list "<<endl;
+
+        }
+        else{
+            cout<<"there no cycle link list "<<endl;
+        }
         default:
             break;
         }
